@@ -24,7 +24,6 @@ local function getDrinks(items, drinks, index)
 				foundDrink = d 
 
 			else
-				print(d.id)
 				local containedItems = dfhack.items.getContainedItems(d)
 				-- Drink containers only contain one item
 				if #containedItems == 1 then
