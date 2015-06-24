@@ -79,6 +79,7 @@ else
 
 						if sourceDrink.stack_size == amountToMove then
 							removedDrinks[sourceDrink.id] = true
+							sourceDrink.stack_size = 1
 						else
 							sourceDrink.stack_size = sourceDrink.stack_size - amountToMove
 						end
