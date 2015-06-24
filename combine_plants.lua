@@ -72,6 +72,7 @@ else
 
 						if sourcePlant.stack_size == amountToMove then
 							removedPlants[sourcePlant.id] = true
+							sourcePlant.stack_size = 1
 						else
 							sourcePlant.stack_size = sourcePlant.stack_size - amountToMove
 						end
