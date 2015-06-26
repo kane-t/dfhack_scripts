@@ -64,9 +64,9 @@ else
 		local drinks = { }
 		local drinkCount = getDrinks(rootItems, drinks, 0)
 
-		for i,p in ipairs(drinks) do
-			print(i .. ': ' .. dfhack.items.getDescription(p, p:getType()))
-		end
+		--for i,p in ipairs(drinks) do
+		--	print(i .. ': ' .. dfhack.items.getDescription(p, p:getType()))
+		--end
 
 		local removedDrinks = { }
 
