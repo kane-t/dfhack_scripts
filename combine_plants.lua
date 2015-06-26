@@ -1,11 +1,17 @@
 -- Merge stacks of plants and plant growths in the selected container or stockpile
 local utils = require 'utils'
 
-validArgs = validArgs or utils.invert({ 'max' })
+validArgs = validArgs or utils.invert({ 'max', 'stockpile', 'container' })
 local args = utils.processArgs({...}, validArgs)
 
-local max = 12;
+local max = 12
 if args.max then max = tonumber(args.max) end
+
+local stockpile = nil
+if args.stockpile then stockpile = df.building.find(tonumber(args.stockpile)) end
+	
+local container = nil
+if args.container then container = df.item.find(tonumber(args.container)) end
 
 local function itemsCompatible(item0, item1)
 	return item0:getType() == item1:getType() 
@@ -17,7 +23,7 @@ local function getPlants(items, plants, index)
 	for i,p in ipairs(items) do
 		-- Skip items currently tasked
 		if #p.specific_refs == 0 then
-			if p:getType() == 53 or p:getType() == 55 then
+			if p:getType() == 53 or p:getType() == 55 or p:getType() == 70 then
 				plants[index] = p
 				index = index + 1
 
@@ -33,19 +39,18 @@ local function getPlants(items, plants, index)
 	return index
 end
 
-local item = dfhack.gui.getSelectedItem(true)
-local building = dfhack.gui.getSelectedBuilding(true)
+local item = container or dfhack.gui.getSelectedItem(true)
+local building = stockpile or dfhack.gui.getSelectedBuilding(true)
 if building ~= nil and building:getType() ~= 29 then building = nil end
-
 if item == nil and building == nil then
 	error("Select an item or building")
 
 else
 	local rootItems;
-	if item then 
-		rootItems = dfhack.items.getContainedItems(item) 
-	else 
+	if building then 
 		rootItems = dfhack.buildings.getStockpileContents(building) 
+	else 
+		rootItems = dfhack.items.getContainedItems(item) 
 	end
 
 	if #rootItems == 0 then
