@@ -11,6 +11,10 @@ local unit = nil
 if args.unit and tonumber(args.unit) then -- Check for unit declaration !REQUIRED
 	unit = df.unit.find(tonumber(args.unit))
 else
+	unit = dfhack.gui.getSelectedUnit()
+end
+
+if unit == nil then
 	print('No unit selected')
 	return
 end
